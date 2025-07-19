@@ -49,9 +49,10 @@ class DosenResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('program_studi_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('programStudi.nama_prodi')
+                    ->label('Program Studi')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

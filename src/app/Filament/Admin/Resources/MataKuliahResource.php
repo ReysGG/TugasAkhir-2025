@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\MataKuliahResource\Pages;
 use App\Filament\Admin\Resources\MataKuliahResource\RelationManagers;
 use App\Models\MataKuliah;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,9 +24,10 @@ class MataKuliahResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('program_studi_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('program_studi_id')
+                    ->relationship(name: 'programStudi', titleAttribute: 'nama_prodi')
+                    ->label('Program Studi')
+                    ->required(),
                 Forms\Components\TextInput::make('kode_mk')
                     ->required()
                     ->maxLength(255),
@@ -35,6 +37,11 @@ class MataKuliahResource extends Resource
                 Forms\Components\TextInput::make('sks')
                     ->required()
                     ->numeric(),
+                Select::make('dosens')
+                    ->relationship('dosens', 'nama_dosen')
+                    ->multiple()
+                    ->preload()
+                    ->label('Dosen Pengampu'),
             ]);
     }
 
@@ -42,9 +49,10 @@ class MataKuliahResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('program_studi_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('programStudi.nama_prodi')
+                    ->label('Program Studi')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('kode_mk')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama_matakuliah')
@@ -52,6 +60,9 @@ class MataKuliahResource extends Resource
                 Tables\Columns\TextColumn::make('sks')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('dosens.nama_dosen')
+                    ->label('Dosen Pengampu')
+                    ->searchable(), // Anda bisa menambahkan search,
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -62,6 +62,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         }
     }
 
+    public function dosen()
+{
+    return $this->belongsTo(Dosen::class);
+}
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;

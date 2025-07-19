@@ -42,9 +42,10 @@ class ProgramStudiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('fakultas_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('fakultas.nama_fakultas')
+                ->label('Fakultas')
+                ->sortable()
+                ->searchable(),
                 Tables\Columns\TextColumn::make('nama_prodi')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('jenjang')
